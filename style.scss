@@ -1,46 +1,51 @@
+.use-keyboard-input {
+  width: 100%;
+  margin: 3% 0;
+  height: 300px;
+}
+
 .keyboard {
   position: fixed;
   left: 0;
-  bottom: 0;
+  top: 0;
   width: 100%;
   padding: 5px 0;
   background: hsl(0, 0%, 50%);
   user-select: none;
-}
 
-.keyboard__keys {
+  &__keys {
     text-align: center;
-}
+  }
 
-.keyboard__key {
-    height: 45px;
+  &__key {
+    height: 55px;
     width: 6%;
     max-width: 90px;
-    margin: 3px;
-    border-radius: 4px;
-    border: none;
+    margin: 4px;
+    border-radius: 2px;
     background: hsla(0, 0%, 100%, 0.2);
     color: #ffffff;
     font-size: 1.05rem;
     outline: none;
     cursor: pointer;
     padding: 0;
-}
 
-.keyboard__key:active {
-  background: hsla(0, 0%, 100%, 0.1);
-}
+    &:active {
+      background: hsla(0, 0%, 100%, 0.1);
+    }
 
-.keyboard__key_wide {
-  font-size: 0.8rem;
-  width: 12%;
-}
+    &_wide {
+      font-size: 0.8rem;
+      width: 12%;
+    }
 
-.keyboard__key_extra-wide {
-  width: 30%;
-  max-width: 500px;
-}
+    &_extra-wide {
+      width: 30%;
+      max-width: 500px;
+    }
 
-.keyboard__key_active {
-  color: hsl(60, 100%, 50%);
+    &_active {
+      color: hsl(60, 100%, 50%);
+    }
+  }
 }

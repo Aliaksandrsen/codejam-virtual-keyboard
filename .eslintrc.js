@@ -1,1 +1,11 @@
-module.exports = { "extends": "airbnb-base" };
+module.exports = {
+    env: {
+        es6: true,
+        browser: true,
+        node: true,
+    },
+    "extends": "airbnb-base",
+    rules: {        
+        "no-underscore-dangle": 'off'
+     },
+};
