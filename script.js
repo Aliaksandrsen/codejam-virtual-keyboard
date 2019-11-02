@@ -34,23 +34,28 @@ const keyboard = {
   _createKeys() {
     const fragment = document.createDocumentFragment();
     const keyLayout = [
-      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'backspace',
-      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-      'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter',
+      '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+      'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
+      'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter',
       'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?',
-      'Ctrl', 'Alt', 'space', 'Alt', 'Ctrl',
+      'Control', 'Space', 'Alt',
     ];
 
     keyLayout.forEach((key) => {
       const keyElement = document.createElement('button');
-      const insertLineBreak = ['backspace', 'p', 'enter', '?'].indexOf(key) !== -1;
+      const insertLineBreak = ['Backspace', '\\', 'Enter', '?'].indexOf(key) !== -1;
 
       // Add attributes/classes
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
+      // Every button have date attribute
+      keyElement.setAttribute('data-key', `${key}`);
+      // if (key === '\\') { //!!!!
+      //   keyElement.setAttribute('data-key', '\\sl');
+      // }
 
       switch (key) {
-        case 'backspace':
+        case 'Backspace':
           keyElement.classList.add('keyboard__key_wide');
           keyElement.innerHTML = '<span>Backspace</span>';
 
@@ -63,18 +68,30 @@ const keyboard = {
 
           break;
 
-        case 'caps':
+        case 'Tab':
           keyElement.classList.add('keyboard__key_wide');
-          keyElement.innerHTML = '<span>CapsLk</span>';
+          keyElement.innerHTML = '<span>Tab</span>';
 
           keyElement.addEventListener('click', () => {
-            this._toggleCapsLock();
-            keyElement.classList.toggle('keyboard__key_active', this.properties.capsLock);
+            this.properties.value = document.querySelector('.use-keyboard-input').value;
+            this.properties.value += '\t';
+            document.querySelector('.use-keyboard-input').value = this.properties.value;
           });
 
           break;
 
-        case 'enter':
+        case 'CapsLock':
+          keyElement.classList.add('keyboard__key_wide');
+          keyElement.innerHTML = '<span>CapsLock</span>';
+
+          keyElement.addEventListener('click', () => {
+            this._toggleCapsLock();
+            keyElement.classList.toggle('keyboard__key_activeted', this.properties.capsLock);
+          });
+
+          break;
+
+        case 'Enter':
           keyElement.classList.add('keyboard__key_wide');
           keyElement.innerHTML = '<span>Enter</span>';
 
@@ -86,9 +103,45 @@ const keyboard = {
 
           break;
 
-        case 'space':
+        case 'Shift':
+          keyElement.classList.add('keyboard__key_wide');
+          keyElement.innerHTML = '<span>Shift</span>';
+
+          keyElement.addEventListener('click', () => {
+            // this.properties.value = document.querySelector('.use-keyboard-input').value;
+            // this.properties.value += '\n';
+            // document.querySelector('.use-keyboard-input').value = this.properties.value;
+          });
+
+          break;
+
+        case 'Control':
+          keyElement.classList.add('keyboard__key_wide');
+          keyElement.innerHTML = '<span>Control</span>';
+
+          keyElement.addEventListener('click', () => {
+            // this.properties.value = document.querySelector('.use-keyboard-input').value;
+            // this.properties.value += '\n';
+            // document.querySelector('.use-keyboard-input').value = this.properties.value;
+          });
+
+          break;
+
+        case 'Alt':
+          keyElement.classList.add('keyboard__key_wide');
+          keyElement.innerHTML = '<span>Alt</span>';
+
+          keyElement.addEventListener('click', () => {
+            // this.properties.value = document.querySelector('.use-keyboard-input').value;
+            // this.properties.value += '\n';
+            // document.querySelector('.use-keyboard-input').value = this.properties.value;
+          });
+
+          break;
+
+        case 'Space':
           keyElement.classList.add('keyboard__key_extra-wide');
-          keyElement.innerHTML = '<span> _ </span>';
+          keyElement.innerHTML = '<span> </span>';
 
           keyElement.addEventListener('click', () => {
             this.properties.value = document.querySelector('.use-keyboard-input').value;
@@ -126,20 +179,37 @@ const keyboard = {
     return fragment;
   },
 
+
   _toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
 
     this.elements.keys.forEach((key) => {
-      if (key.childElementCount === 0) {
+      const myKey = key;
+      if (myKey.childElementCount === 0) {
         if (this.properties.capsLock) {
-          key.textContent = key.textContent.toUpperCase();
+          myKey.textContent = myKey.textContent.toUpperCase();
         } else {
-          key.textContent = key.textContent.toLowerCase();
+          myKey.textContent = myKey.textContent.toLowerCase();
         }
       }
     });
   },
 };
+
+document.addEventListener('keydown', (event) => {
+  const key = document.querySelector(`button[data-key='${event.key}']`);// date attribute
+  if (event.key === 'CapsLock') {
+    keyboard._toggleCapsLock.call(keyboard);
+    key.classList.toggle('keyboard__key_activeted');
+  }
+  key.classList.toggle('keyboard__key_activeted');
+});
+
+document.addEventListener('keyup', (event) => {
+  // console.log(event.key);
+  // console.log(document.querySelector(`button[data-key='${event.key}']`));
+  document.querySelector(`button[data-key='${event.key}']`).classList.toggle('keyboard__key_activeted');
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   keyboard.init();
