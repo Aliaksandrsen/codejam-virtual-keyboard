@@ -34,27 +34,24 @@ const keyboard = {
   _createKeys() {
     const fragment = document.createDocumentFragment();
     const keyLayout = [
-      '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
-      'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
-      'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter',
-      'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?',
-      'Control', 'Space', 'Alt',
+      ['`', 'Backquote'], ['1', 'Digit1'], ['2', 'Digit2'], ['3', 'Digit3'], ['4', 'Digit4'], ['5', 'Digit5'], ['6', 'Digit6'], ['7', 'Digit7'], ['8', 'Digit8'], ['9', 'Digit9'], ['0', 'Digit0'], ['-', 'Minus'], ['=', 'Equal'], ['Backspace', 'Backspace'],
+      ['Tab', 'Tab'], ['q', 'KeyQ'], ['w', 'KeyW'], ['e', 'KeyE'], ['r', 'KeyR'], ['t', 'KeyT'], ['y', 'KeyY'], ['u', 'KeyU'], ['i', 'KeyI'], ['o', 'KeyO'], ['p', 'KeyP'], ['[', 'BracketLeft'], [']', 'BracketRight'], ['\\', 'Backslash'],
+      ['CapsLock', 'CapsLock'], ['a', 'KeyA'], ['s', 'KeyS'], ['d', 'KeyD'], ['f', 'KeyF'], ['g', 'KeyG'], ['h', 'KeyH'], ['j', 'KeyJ'], ['k', 'KeyK'], ['l', 'KeyL'], [';', 'Semicolon'], ["'", 'Quote'], ['Enter', 'Enter'],
+      ['Shift', 'ShiftLeft'], ['z', 'KeyZ'], ['x', 'KeyX'], ['c', 'KeyC'], ['v', 'KeyV'], ['b', 'KeyB'], ['n', 'KeyN'], ['m', 'KeyM'], [',', 'Comma'], ['.', 'Period'], ['/', 'Slash'],
+      ['Control', 'ControlLeft'], ['Alt', 'AltLeft'], ['Space', 'Space'], ['Alt', 'AltRight'], ['Control', 'ControlRight'],
     ];
 
     keyLayout.forEach((key) => {
       const keyElement = document.createElement('button');
-      const insertLineBreak = ['Backspace', '\\', 'Enter', '?'].indexOf(key) !== -1;
+      const insertLineBreak = ['Backspace', '\\', 'Enter', '/'].indexOf(key[0]) !== -1;
 
       // Add attributes/classes
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
       // Every button have date attribute
-      keyElement.setAttribute('data-key', `${key}`);
-      // if (key === '\\') { //!!!!
-      //   keyElement.setAttribute('data-key', '\\sl');
-      // }
+      keyElement.setAttribute('data-key', `${key[1]}`);
 
-      switch (key) {
+      switch (key[0]) {
         case 'Backspace':
           keyElement.classList.add('keyboard__key_wide');
           keyElement.innerHTML = '<span>Backspace</span>';
@@ -152,15 +149,15 @@ const keyboard = {
           break;
 
         default:
-          keyElement.textContent = key.toLowerCase();
+          keyElement.textContent = key[0].toLowerCase();
 
           keyElement.addEventListener('click', () => {
             if (this.properties.capsLock) {
               this.properties.value = document.querySelector('.use-keyboard-input').value;
-              this.properties.value += key.toUpperCase();
+              this.properties.value += key[0].toUpperCase();
             } else {
               this.properties.value = document.querySelector('.use-keyboard-input').value;
-              this.properties.value += key.toLowerCase();
+              this.properties.value += key[0].toLowerCase();
             }
 
             document.querySelector('.use-keyboard-input').value = this.properties.value;
@@ -179,7 +176,6 @@ const keyboard = {
     return fragment;
   },
 
-
   _toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
 
@@ -196,20 +192,35 @@ const keyboard = {
   },
 };
 
+// ===================================================== work with real keyboard
+
 document.addEventListener('keydown', (event) => {
-  const key = document.querySelector(`button[data-key='${event.key}']`);// date attribute
-  if (event.key === 'CapsLock') {
+  // Use date attribute
+  const key = document.querySelector(`button[data-key='${event.code}']`);
+  if (event.code === 'CapsLock') {
     keyboard._toggleCapsLock.call(keyboard);
     key.classList.toggle('keyboard__key_activeted');
+  }
+  // Resolve default events
+  if (event.code === 'Tab' || event.code === 'AltLeft' || event.code === 'AltRight' || event.code === 'ShiftLeft') {
+    event.preventDefault();
+    if (event.code === 'Tab') {
+      document.querySelector('.use-keyboard-input').value += '\t';
+    }
+    if (event.code === 'ShiftLeft') {
+      keyboard._toggleCapsLock.call(keyboard);
+    }
   }
   key.classList.toggle('keyboard__key_activeted');
 });
 
 document.addEventListener('keyup', (event) => {
-  // console.log(event.key);
-  // console.log(document.querySelector(`button[data-key='${event.key}']`));
-  document.querySelector(`button[data-key='${event.key}']`).classList.toggle('keyboard__key_activeted');
+  document.querySelector(`button[data-key='${event.code}']`).classList.toggle('keyboard__key_activeted');
+  if (event.code === 'ShiftLeft') {
+    keyboard._toggleCapsLock.call(keyboard);
+  }
 });
+
 
 window.addEventListener('DOMContentLoaded', () => {
   keyboard.init();
