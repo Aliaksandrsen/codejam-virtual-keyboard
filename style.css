@@ -10,7 +10,7 @@
   top: 0;
   width: 100%;
   padding: 5px 0;
-  background: gray;
+  background: #333333;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -28,21 +28,25 @@
   margin: 4px;
   border-radius: 2px;
   border: none;
-  background: rgba(255, 255, 255, 0.2);
+  background: #666666;
   color: #ffffff;
   font-size: 1.05rem;
   outline: none;
   cursor: pointer;
   vertical-align: top;
   padding: 0;
+  -webkit-transition: 0.1s linear;
+  transition: 0.1s linear;
 }
 
 .keyboard__key_activeted {
-  background: rgba(255, 255, 255, 0.1);
+  background: #242942;
+  border-radius: 20px;
 }
 
 .keyboard__key:active {
-  background: rgba(255, 255, 255, 0.1);
+  background: #242942;
+  border-radius: 20px;
 }
 
 .keyboard__key_wide {

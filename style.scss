@@ -10,7 +10,7 @@
   top: 0;
   width: 100%;
   padding: 5px 0;
-  background: hsl(0, 0%, 50%);
+  background: hsl(0, 0%, 20%);
   user-select: none;
 
   &__keys {
@@ -24,20 +24,24 @@
     margin: 4px;
     border-radius: 2px;
     border: none;
-    background: hsla(0, 0%, 100%, 0.2);
+    background: hsl(0, 0%, 40%);
     color: #ffffff;
     font-size: 1.05rem;
     outline: none;
     cursor: pointer;
     vertical-align: top;
     padding: 0;
+    transition: 0.1s linear;
 
-    &_activeted{  // for buttons which active from real keyboard
-      background: hsla(0, 0%, 100%, 0.1);
+    &_activeted {
+      // for buttons which active from real keyboard
+      background: hsl(230, 30%, 20%);
+      border-radius: 20px;
     }
 
     &:active {
-      background: hsla(0, 0%, 100%, 0.1);
+      background: hsl(230, 30%, 20%);
+      border-radius: 20px;
     }
 
     &_wide {
