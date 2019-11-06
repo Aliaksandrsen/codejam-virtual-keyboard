@@ -147,7 +147,6 @@ class Keyboard {
           break;
 
         default: {
-          // eslint-disable-next-line no-case-declarations
           let lenguageLetter;
           if (!this.properties.isRrussian) {
             // eslint-disable-next-line prefer-destructuring
@@ -226,12 +225,11 @@ class Keyboard {
 
         case 'Enter':
           document.querySelector('.use-keyboard-input').value += '\n';
-          // keyboard.properties.value = document.querySelector('.use-keyboard-input');
           break;
 
         case 'ShiftLeft':
           this.toggleCapsLock();
-          // key.classList.add('keyboard__key_activeted');
+          key.classList.add('keyboard__key_activeted');
           break;
 
         case 'ControlLeft':
@@ -303,10 +301,12 @@ class Keyboard {
 
     runOnKeys(
       () => {
-        this.properties.isRrussian = !this.properties.isRrussian;
-        // delete old
-        document.querySelector('.keyboard').remove();
-        this.initVirtual();
+        setTimeout(() => {
+          this.properties.isRrussian = !this.properties.isRrussian;
+          // delete old
+          document.querySelector('.keyboard').remove();
+          this.initVirtual();
+        }, 100);
       },
       'ShiftLeft',
       'AltLeft',
