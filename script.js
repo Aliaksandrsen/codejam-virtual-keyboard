@@ -147,15 +147,10 @@ class Keyboard {
           break;
 
         default: {
-          let lenguageLetter;
+          let [, lenguageLetter] = key;
           if (!this.properties.isRrussian) {
-            // eslint-disable-next-line prefer-destructuring
-            lenguageLetter = key[0];
-          } else {
-            // eslint-disable-next-line prefer-destructuring
-            lenguageLetter = key[1];
+            [lenguageLetter] = key;
           }
-
           keyElement.textContent = lenguageLetter.toLowerCase();
 
           keyElement.addEventListener('click', () => {
@@ -200,7 +195,7 @@ class Keyboard {
     });
   }
 
-  /**  work with real keyboard */
+  // work with real keyboard
   initReal() {
     document.addEventListener('keydown', (event) => {
       // Use date attribute
@@ -267,6 +262,7 @@ class Keyboard {
       }
 
       key.classList.add('keyboard__key_activeted');
+      console.clear();//!====================================
     });
 
     document.addEventListener('keyup', (event) => {
