@@ -1,0 +1,66 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 3% 3%;
+  min-width: 970px;
+}
+
+.use-keyboard-input {
+  width: 99.3%;
+  margin: 0;
+  height: 200px;
+  outline: none;
+}
+
+.keyboard {
+  left: 0;
+  bottom: 10%;
+  width: 100%;
+  padding: 5px 0;
+  background: hsl(0, 0%, 20%);
+  user-select: none;
+
+  &__keys {
+    text-align: center;
+  }
+
+  &__key {
+    height: 65px;
+    width: 6%;
+    max-width: 90px;
+    margin: 4px;
+    border-radius: 2px;
+    border: none;
+    background: hsl(0, 0%, 40%);
+    color: #ffffff;
+    font-size: 1.05rem;
+    outline: none;
+    cursor: pointer;
+    vertical-align: top;
+    padding: 0;
+    transition: 0.1s linear;
+
+    &_activeted {
+      // for buttons which active from real keyboard
+      background: hsl(230, 30%, 20%);
+      border-radius: 20px;
+    }
+
+    &:active {
+      background: hsl(230, 30%, 20%);
+      border-radius: 20px;
+    }
+
+    &_wide {
+      font-size: 0.8rem;
+      width: 12%;
+    }
+
+    &_extra-wide {
+      width: 30%;
+      max-width: 500px;
+    }
+  }
+}
